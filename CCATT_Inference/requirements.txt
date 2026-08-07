@@ -1,0 +1,12 @@
+# Steps 1 (V3_Create_Temporal_Predicted_HOI_intervals_...) and 3 (person_identification_v4.py)
+# only need these. They run on CPU.
+pandas>=1.5
+numpy>=1.23
+matplotlib>=3.6
+opencv-python>=4.7
+scipy>=1.9
+
+# Step 2 (generate_role_assignment_csvs.py) does NOT need anything below this line --
+# it just launches the separate role_contrastive project as a subprocess. That
+# project has its own environment (typically including torch + ultralytics) which
+# must be set up separately; see README.md "External model dependency".
