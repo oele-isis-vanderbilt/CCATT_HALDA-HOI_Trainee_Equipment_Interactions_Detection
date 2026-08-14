@@ -1,24 +1,15 @@
 # CCATT Inference Pipeline
 
-Give this a training video. It tells you which piece of equipment was used
-(IV, ventilator, monitor), who used it, and exactly when it started and
-stopped. No deep-learning background needed to run it.
+Takes a CCATT training video as input and outputs which piece of equipment
+was used (IV, ventilator, monitor), who used it, and the exact start/stop
+time of each interaction. No deep-learning background is required to run it.
 
-## Easiest way to use this
+## What to provide
 
-One command, one video in, one report out:
-
-```bash
-VIDEO_PATH=/path/to/video.mp4 \
-PRETRAINED_MODEL_PATH=/path/to/checkpoint_best.pth \
-bash run_video_to_temporal_hoi.sh
-```
-
-Add `--dry_run` to the end first to check your paths are right before it
-actually runs (it takes a few minutes on a GPU, longer without one).
-
-You'll get a CSV of interaction start/end times back
-(`video_to_temporal_hoi_output/segments/<video>_temporal_segments.csv`).
+Upload the CAM (wide-angle) and PAN (wide-angle) camera videos for **one
+simulation at a time**. The pipeline processes both camera views of that
+simulation together to predict all equipment interactions -- don't mix
+videos from different simulations in the same run.
 
 ## If you're processing many videos at once (the ML team's usual workflow)
 
@@ -32,9 +23,8 @@ when someone else already handed you a folder of partial results:
 | 2 | `generate_role_assignment_csvs.py` | Figures out who (Nurse/Doctor/RT) is where, per video | GPU, slow |
 | 3 | `person_identification_v4.py` | Combines Step 1 + Step 2 into the final "who did what, when" table | CPU, fast |
 
-Most days you'll only run Steps 2 and 3 -- Steps 0/1 are usually already done
-for you. Every script (including `run_video_to_temporal_hoi.sh`) supports
-`--dry_run` -- always try that first on a new machine.
+Run Steps 0-3 in order for a new video. Every script supports `--dry_run` --
+always try that first on a new machine.
 
 ## Setup
 
