@@ -1,0 +1,14 @@
+{
+  "IV Pump": {
+    "interaction_yes": 0.000000,
+    "interaction_no": 0.000000
+  },
+  "MV": {
+    "interaction_yes": 0.000000,
+    "interaction_no": 0.000000
+  },
+  "Propac": {
+    "interaction_yes": 0.000000,
+    "interaction_no": 0.000000
+  }
+}
