@@ -7,14 +7,18 @@
 # person_identification_v4.py) so you don't have to run them by hand.
 #
 # Required environment variables:
-#   PRETRAINED_MODEL_PATH  path to the fine-tuned CDN checkpoint (.pth)
-#   WEIGHTS                path to the trained role_contrastive model
-#                           weights (.pt) -- ask the ML team for this
-#   DEMO_ROLE_SCRIPT        path to role_contrastive/demo_role.py -- ask the
-#                           ML team for this
-#   PYTHON_BIN              python3 interpreter that has the role_contrastive
-#                           environment's dependencies installed -- ask the
-#                           ML team for this
+#   PRETRAINED_MODEL_PATH  path to the fine-tuned CDN checkpoint (.pth) --
+#                          this is the equipment/action-detection model
+#   PERSON_ID_WEIGHTS      path to the trained person/role identification
+#                          model's weights (.pt) -- this is a SEPARATE model
+#                          from PRETRAINED_MODEL_PATH above; ask the ML team
+#                          for it
+#   DEMO_ROLE_SCRIPT       path to role_contrastive/demo_role.py (part of the
+#                          person/role identification model) -- ask the ML
+#                          team for this
+#   PYTHON_BIN             python3 interpreter that has the person/role
+#                          identification model's environment's dependencies
+#                          installed -- ask the ML team for this
 #
 # Optional:
 #   INPUT_DIR       folder holding exactly the 2 videos (CAM + PAN) for one
@@ -32,7 +36,7 @@
 #
 # Usage:
 #   PRETRAINED_MODEL_PATH=/path/to/checkpoint_best.pth \
-#   WEIGHTS=/path/to/role_contrastive/weights/best.pt \
+#   PERSON_ID_WEIGHTS=/path/to/role_contrastive/weights/best.pt \
 #   DEMO_ROLE_SCRIPT=/path/to/role_contrastive/demo_role.py \
 #   PYTHON_BIN=/path/to/role_yolo_env/bin/python3 \
 #   bash run_full_ccatt_pipeline.sh [--dry_run]
@@ -51,7 +55,7 @@ if [ "${1:-}" = "--dry_run" ]; then
 fi
 
 PRETRAINED_MODEL_PATH="${PRETRAINED_MODEL_PATH:-}"
-WEIGHTS="${WEIGHTS:-}"
+PERSON_ID_WEIGHTS="${PERSON_ID_WEIGHTS:-}"
 DEMO_ROLE_SCRIPT="${DEMO_ROLE_SCRIPT:-}"
 PYTHON_BIN="${PYTHON_BIN:-}"
 INPUT_DIR="${INPUT_DIR:-$ROOT_DIR/Video_Input}"
@@ -73,13 +77,13 @@ if [ ! -f "$CDN_REPO_ROOT/main.py" ]; then
   echo "[ERROR] CDN_REPO_ROOT does not look like the CDN repo (no main.py found): $CDN_REPO_ROOT" >&2
   exit 1
 fi
-if [ -z "$WEIGHTS" ] || [ -z "$DEMO_ROLE_SCRIPT" ] || [ -z "$PYTHON_BIN" ]; then
-  echo "[ERROR] Set WEIGHTS, DEMO_ROLE_SCRIPT, and PYTHON_BIN to your copy of the" >&2
+if [ -z "$PERSON_ID_WEIGHTS" ] || [ -z "$DEMO_ROLE_SCRIPT" ] || [ -z "$PYTHON_BIN" ]; then
+  echo "[ERROR] Set PERSON_ID_WEIGHTS, DEMO_ROLE_SCRIPT, and PYTHON_BIN to your copy of the" >&2
   echo "  role identification model (ask the ML team for it -- see README.md)." >&2
   exit 1
 fi
-if [ ! -f "$WEIGHTS" ]; then
-  echo "[ERROR] WEIGHTS not found: $WEIGHTS" >&2
+if [ ! -f "$PERSON_ID_WEIGHTS" ]; then
+  echo "[ERROR] PERSON_ID_WEIGHTS not found: $PERSON_ID_WEIGHTS" >&2
   exit 1
 fi
 if [ ! -f "$DEMO_ROLE_SCRIPT" ]; then
@@ -118,7 +122,7 @@ if [ "$DRY_RUN" -eq 1 ]; then
   echo "                         ${VIDEOS[1]}"
   echo "  CDN checkpoint:        $PRETRAINED_MODEL_PATH"
   echo "  CDN repo:              $CDN_REPO_ROOT"
-  echo "  role weights:          $WEIGHTS"
+  echo "  person ID weights:     $PERSON_ID_WEIGHTS"
   echo "  role demo script:      $DEMO_ROLE_SCRIPT"
   echo "  role python bin:       $PYTHON_BIN"
   echo "  Step 0 results go to:  $OUTPUT_ROOT/hoi_results_${JOB_NUMBER}/"
@@ -168,7 +172,7 @@ python3 "$ROOT_DIR/generate_role_assignment_csvs.py" \
   --input_root "$STEP1_OUTDIR" \
   --video_roots "$INPUT_DIR" \
   --role_csv_root "$ROLE_CSV_ROOT" \
-  --weights "$WEIGHTS" \
+  --weights "$PERSON_ID_WEIGHTS" \
   --demo_role_script "$DEMO_ROLE_SCRIPT" \
   --python_bin "$PYTHON_BIN" \
   --conf "$CONF" \

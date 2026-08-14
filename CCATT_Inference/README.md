@@ -26,7 +26,7 @@ pip install -r requirements.txt
 
 That covers everything except the "role identification" model, a separate,
 already-trained model -- ask the ML team for it if you don't have it, then
-point `WEIGHTS` / `DEMO_ROLE_SCRIPT` / `PYTHON_BIN` at your copy.
+point `PERSON_ID_WEIGHTS` / `DEMO_ROLE_SCRIPT` / `PYTHON_BIN` at your copy.
 
 ## Easiest way to run it (for Domain Experts)
 
@@ -35,7 +35,7 @@ experience needed:
 
 ```bash
 PRETRAINED_MODEL_PATH=/path/to/checkpoint_best.pth \
-WEIGHTS=/path/to/role_contrastive/weights/best.pt \
+PERSON_ID_WEIGHTS=/path/to/role_contrastive/weights/best.pt \
 DEMO_ROLE_SCRIPT=/path/to/role_contrastive/demo_role.py \
 PYTHON_BIN=/path/to/role_yolo_env/bin/python3 \
 bash run_full_ccatt_pipeline.sh
