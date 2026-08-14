@@ -1,20 +1,64 @@
 # CCATT Inference Pipeline
 
-This repo takes two wide angle camera recordings of CCATT training simulation as input and outputs which piece of equipment
-was used (IV, ventilator, monitor), who used it, and the exact start/stop
-time of each interaction. No deep-learning background is required to run it.
+This repo takes two wide-angle camera recordings of a CCATT training
+simulation as input and outputs which piece of equipment was used (IV,
+ventilator, monitor), who used it, and the exact start/stop time of each
+interaction. No deep-learning background is required to run it.
 
 ## What to provide
 
-Upload the CAM (wide-angle) and PAN (wide-angle) camera videos for **one
-simulation at a time**. The pipeline processes both camera views of that
+Upload the **synchronized** CAM (wide-angle) and PAN (wide-angle) camera
+videos for **one simulation at a time** into the `Video_Input/` folder next
+to this README -- both videos must be recordings of the same simulation,
+started/stopped together. The pipeline processes both camera views of that
 simulation together to predict all equipment interactions -- don't mix
 videos from different simulations in the same run.
 
-## If you're processing many videos at once (the ML team's usual workflow)
+`Video_Input/` is git-ignored, so uploaded videos are never committed to the
+repo.
 
-The same work happens in 4 separate steps, useful when running in bulk or
-when someone else already handed you a folder of partial results:
+## Setup
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+That covers everything except the "role identification" model, a separate,
+already-trained model -- ask the ML team for it if you don't have it, then
+point `WEIGHTS` / `DEMO_ROLE_SCRIPT` / `PYTHON_BIN` at your copy.
+
+## Easiest way to run it (for Domain Experts)
+
+One command runs all 4 steps and produces the final report -- no programming
+experience needed:
+
+```bash
+PRETRAINED_MODEL_PATH=/path/to/checkpoint_best.pth \
+WEIGHTS=/path/to/role_contrastive/weights/best.pt \
+DEMO_ROLE_SCRIPT=/path/to/role_contrastive/demo_role.py \
+PYTHON_BIN=/path/to/role_yolo_env/bin/python3 \
+bash run_full_ccatt_pipeline.sh
+```
+
+Add `--dry_run` to the end first to check your paths (and that `Video_Input/`
+has exactly the 2 videos it expects) before it actually runs.
+
+If you have programming experience and want to see the results after each
+step, or need to run many simulations in bulk, use the step-by-step version
+below instead.
+
+## What you get back
+
+- The file you actually want: **`CCATT_Trainee_Equipment_Interactions.csv`**
+  -- who, what equipment, when.
+- A fuller version with extra detail: `combined_segments_with_person_id_v4.csv`.
+
+## Detailed Step by Step Run (Optional if users want to see the results step by step)
+
+If you're processing many videos at once (the ML team's usual workflow), the
+same work happens in 4 separate steps, useful when running in bulk or when
+someone else already handed you a folder of partial results:
 
 | # | Script | What it does | Speed |
 |---|--------|---------------|-------|
@@ -25,26 +69,6 @@ when someone else already handed you a folder of partial results:
 
 Run Steps 0-3 in order for a new video. Every script supports `--dry_run` --
 always try that first on a new machine.
-
-## Setup
-
-```bash
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-That covers everything except Step 2, which calls a separate,
-already-trained "role identification" model -- ask the ML team for it if you
-don't have it, then point `--weights` / `--demo_role_script` / `--python_bin`
-at your copy.
-
-## What you get back
-
-- The file you actually want: **`CCATT_Trainee_Equipment_Interactions.csv`**
-  -- who, what equipment, when.
-- A fuller version with extra detail: `combined_segments_with_person_id_v4.csv`.
-
-## Example commands (Steps 0-3 separately)
 
 Replace every `/path/to/...` with your own folder. Add `--dry_run` to check
 paths first without running anything.
