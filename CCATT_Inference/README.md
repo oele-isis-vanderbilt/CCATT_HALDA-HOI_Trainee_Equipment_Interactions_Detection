@@ -33,6 +33,10 @@ point `PERSON_ID_WEIGHTS` / `DEMO_ROLE_SCRIPT` / `PYTHON_BIN` at your copy.
 One command runs all 4 steps and produces the final report -- no programming
 experience needed:
 
+`PRETRAINED_MODEL_PATH` is the pretrained CDN model (detects equipment/
+actions). `PERSON_ID_WEIGHTS` / `DEMO_ROLE_SCRIPT` / `PYTHON_BIN` are the
+separate person/role identification model (detects who's who):
+
 ```bash
 PRETRAINED_MODEL_PATH=/path/to/checkpoint_best.pth \
 PERSON_ID_WEIGHTS=/path/to/role_contrastive/weights/best.pt \
