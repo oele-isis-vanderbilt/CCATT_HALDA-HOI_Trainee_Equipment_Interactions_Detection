@@ -1466,18 +1466,18 @@ def load_gt_annotations(gt_path, fps, video_path=None, pred_path=None, debug=Fal
         return {}, None, None
     video_key = ""
     if debug:
-        print("Divya Check video_path,pred_path,",video_path,pred_path)
+        print("Debugging check video_path,pred_path,",video_path,pred_path)
     for cand in [video_path, pred_path]:
         if cand:
             video_key = Path(str(cand)).stem.lower()
             if debug:
-                print("Divya Check video_key",video_key)
+                print("Debugging check video_key",video_key)
             break
     if sheet_token_override and debug:
-        print("Divya group token (sheet_token_override) ->", sheet_token_override)
+        print("Debugging group token (sheet_token_override) ->", sheet_token_override)
     view_key = get_camera_view(video_path) or get_camera_view(pred_path)
     if debug:
-        print("Divya Check view key",view_key)
+        print("Debugging check view key",view_key)
     first_interaction_frame = None
     patient_hint = None
 
@@ -1542,7 +1542,7 @@ def load_gt_annotations(gt_path, fps, video_path=None, pred_path=None, debug=Fal
             extra_patient_col = patient_name_col
 
         if debug:
-            print("Divya Check,patient_col", patient_col, "extra_patient_col", extra_patient_col)
+            print("Debugging check,patient_col", patient_col, "extra_patient_col", extra_patient_col)
         # Candidate time columns (used later and for debug samples)
         start_cols = [
             "Hands-On Interaction Start Time (Hr:Min.Sec)",

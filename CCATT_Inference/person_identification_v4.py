@@ -54,15 +54,17 @@ IDENTITY_MAP = {0: "Nurse", 1: "Doctor", 2: "RT", 3: "Additional Team"}
 ADDITIONAL_TEAM_CLASS_ID = 3
 
 # role_contrastive/role_assignment.py's CLASS_NAMES use "Physician"/"Additional
-# Stuff"; the rest of the CCAT pipeline (IDENTITY_MAP above, metrics, viz) uses
-# "Doctor"/"Additional Team". Map both spellings to the same class id so the
-# output stays consistent regardless of which CSV vocabulary shows up.
+# Staff" (verified against the actual CLASS_NAMES list, not just its docstring);
+# the rest of the CCAT pipeline (IDENTITY_MAP above, metrics, viz) uses
+# "Doctor"/"Additional Team". Map every spelling variant actually used by either
+# codebase to the same class id so the output stays consistent regardless of
+# which CSV vocabulary shows up.
 ROLE_NAME_TO_CLASS_ID = {
     "Nurse": 0,
     "Physician": 1,
     "Doctor": 1,
     "RT": 2,
-    "Additional Stuff": 3,
+    "Additional Staff": 3,
     "Additional Team": 3,
 }
 
