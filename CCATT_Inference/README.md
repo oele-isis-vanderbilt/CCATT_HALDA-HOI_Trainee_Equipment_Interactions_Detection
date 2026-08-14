@@ -1,6 +1,6 @@
 # CCATT Inference Pipeline
 
-Takes a CCATT training video as input and outputs which piece of equipment
+This repo takes two wide angle camera recordings of CCATT training simulation as input and outputs which piece of equipment
 was used (IV, ventilator, monitor), who used it, and the exact start/stop
 time of each interaction. No deep-learning background is required to run it.
 
