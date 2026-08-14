@@ -24,9 +24,14 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-That covers everything except the "role identification" model, a separate,
-already-trained model -- ask the ML team for it if you don't have it, then
-point `PERSON_ID_WEIGHTS` / `DEMO_ROLE_SCRIPT` / `PYTHON_BIN` at your copy.
+That covers the code. All the trained model weights you'll need (the CDN
+checkpoint for `PRETRAINED_MODEL_PATH` and the person/role identification
+weights for `PERSON_ID_WEIGHTS`) are here:
+<https://vanderbilt.box.com/s/vc81uk1palnjjh72j3pvsc7awzj56u98>
+
+For `DEMO_ROLE_SCRIPT` / `PYTHON_BIN` (the role identification model's own
+code + environment, not just its weights), ask the ML team if you don't
+already have a copy.
 
 ## Easiest way to run it (for Domain Experts)
 
