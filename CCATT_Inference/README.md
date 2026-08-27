@@ -35,9 +35,8 @@ a single new video's frames (it builds `dataset_train` unconditionally, even
 in `--eval` mode) -- see `CDN_Pretrained/NOTES_INFERENCE_USAGE.md` for
 details.
 
-For `DEMO_ROLE_SCRIPT` / `PYTHON_BIN` (the role identification model's own
-code + environment, not just its weights), ask the ML team if you don't
-already have a copy.
+`DEMO_ROLE_SCRIPT` is included in this repo at `role_contrastive/demo_role.py`
+(along with its sibling `role_assignment.py`).
 
 ## Easiest way to run it (for Domain Experts)
 
@@ -133,6 +132,10 @@ Skips videos already done; pass `--inplace` to overwrite them.
   exactly which path is wrong instead of failing partway through.
 - **Step 3 can't find a video's role info** -> that video hasn't had Step 2
   run on it yet.
-- **Step 2 complains about `--weights` / `--demo_role_script` /
-  `--python_bin`** -> ask the ML team for the "role identification" model
-  project.
+- **Step 2 complains about `--weights`** -> get the person/role identification
+  weights from the Box folder above.
+- **Step 2 complains about `--demo_role_script`** -> point it at
+  `role_contrastive/demo_role.py` in this repo.
+- **Step 2 complains about `--python_bin`** -> ask the ML team for a Python
+  environment with the role identification model's dependencies
+  (ultralytics, opencv, etc.) installed.
