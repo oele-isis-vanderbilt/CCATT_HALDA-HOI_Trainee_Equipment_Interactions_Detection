@@ -29,6 +29,12 @@ checkpoint for `PRETRAINED_MODEL_PATH` and the person/role identification
 weights for `PERSON_ID_WEIGHTS`) are here:
 <https://vanderbilt.box.com/s/vc81uk1palnjjh72j3pvsc7awzj56u98>
 
+That same Box folder also has `trainval_hico.json`, which CDN's `main.py`
+requires at `<hoi_path>/annotations/trainval_hico.json` even for inference on
+a single new video's frames (it builds `dataset_train` unconditionally, even
+in `--eval` mode) -- see `CDN_Pretrained/NOTES_INFERENCE_USAGE.md` for
+details.
+
 For `DEMO_ROLE_SCRIPT` / `PYTHON_BIN` (the role identification model's own
 code + environment, not just its weights), ask the ML team if you don't
 already have a copy.

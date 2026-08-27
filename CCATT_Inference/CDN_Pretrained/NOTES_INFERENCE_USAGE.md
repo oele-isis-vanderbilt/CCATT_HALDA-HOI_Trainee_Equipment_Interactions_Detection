@@ -17,7 +17,7 @@ frame's predictions (no `[:20]` cap, unlike `CDN_Finetuned/engine.py`).
 `convert_parameters.py` are copied verbatim from hyper13, MD5-verified
 against the source at copy time.
 
-## Open question: trainval_hico.json
+## trainval_hico.json
 
 The original README's own Evaluation example (see `README.md` above) always
 runs `--hoi_path` against the *full prepared* HICO-DET dataset directory --
@@ -27,7 +27,8 @@ training samples, because `main.py` builds `dataset_train` (and a
 sampler hard-fails if there are zero samples.
 
 For a single new video's freshly-extracted frames folder, there's no such
-file. We have not yet identified where the real, non-empty
-`trainval_hico.json` used for CCATT inference runs is supposed to come from --
-this is unresolved, and no placeholder/fabricated file has been substituted
-for it.
+file generated automatically. **Resolved:** the real `trainval_hico.json`
+used for CCATT inference runs is in the same Box folder as the model
+weights (see `../README.md`) -- <https://vanderbilt.box.com/s/vc81uk1palnjjh72j3pvsc7awzj56u98>.
+Copy it to `<hoi_path>/annotations/trainval_hico.json` alongside each video's
+extracted frames before running Step 0.
