@@ -139,3 +139,8 @@ Skips videos already done; pass `--inplace` to overwrite them.
 - **Step 2 complains about `--python_bin`** -> ask the ML team for a Python
   environment with the role identification model's dependencies
   (ultralytics, opencv, etc.) installed.
+
+## Reference Documentation
+
+- https://arxiv.org/pdf/2509.17888
+- https://vanderbilt.box.com/s/0lxb5hev5699bfjs4mnyvqnsews4ea5o
