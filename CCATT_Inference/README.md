@@ -76,8 +76,8 @@ someone else already handed you a folder of partial results:
 
 | # | Script | What it does | Speed |
 |---|--------|---------------|-------|
-| 0 | `Advanced_FineTuned_Model_Temporal_Data_Processing_Inference_pipeline_Actv_L.sh` | Video -> frame-by-frame equipment/action guesses | GPU, slow |
-| 1 | `V3_Create_Temporal_Predicted_HOI_intervals_version3_Gridsearch_Threshold.py` | Those guesses -> interaction start/end times | CPU |
+| 0 | `Advanced_FineTuned_Model_Temporal_Data_Processing_Inference_pipeline_Actv_L.sh` | Video -> frame-by-frame equipment/action predictions | GPU, slow |
+| 1 | `V3_Create_Temporal_Predicted_HOI_intervals_version3_Gridsearch_Threshold.py` | Those predictions -> interaction start/end times | CPU |
 | 2 | `generate_role_assignment_csvs.py` | Figures out who (Nurse/Doctor/RT) is where, per video | GPU, slow |
 | 3 | `person_identification_v4.py` | Combines Step 1 + Step 2 into the final "who did what, when" table | CPU, fast |
 
